@@ -1,28 +1,53 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+﻿<template>
+    <v-app id="inspire">
+        <v-navigation-drawer v-model="drawer" app class="custom-drawer">
+            <sideComponent v-bind:param="Name"></sideComponent>
+        </v-navigation-drawer>
+
+        <v-app-bar app>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-toolbar-title>社員情報管理画面</v-toolbar-title>
+            <v-btn class="ml-auto" v-on:click="LOGOUT" :disabled="!loggeIn">ログアウト</v-btn>
+        </v-app-bar>
+
+            <v-main>
+                <router-view @loggeIn="get_LoggeIn" style="background-color: #F5F5F5 "></router-view>
+            </v-main>
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import sideComponent from './components/sideComponent.vue'
+    export default {
+        name: 'App',
+        components: {
+            sideComponent
+        },
+        data() {
+            return {
+                drawer: null,
+                loggeIn: false,
+                Name: '',
+                
+            };
+        },
+        methods: {
+            get_LoggeIn(loggeIn_Judge,syainName) {
+                this.loggeIn = loggeIn_Judge;
+                this.Name = syainName;
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+            },
+            LOGOUT() {
+                this.loggeIn = false
+                this.$router.push({ name: 'user_Login' });
+            },
+        },
+    };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    .custom-drawer {
+        background-color: grey; /* 背景色をグレーに設定 */
+        color: white; /* 文字色を白に設定 */
+    }
 </style>

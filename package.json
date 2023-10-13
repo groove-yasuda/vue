@@ -8,12 +8,22 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@handsontable/vue": "13.1.0",
+    "@types/handsontable": "0.35.0",
+    "axios": "1.5.0",
     "core-js": "^3.8.3",
-    "vue": "^2.6.14"
+    "handsontable": "13.1.0",
+    "he": "1.2.0",
+    "vue": "^2.6.14",
+    "vue-pivot-table-plus": "0.7.1",
+    "vue-router": "2.8.1",
+    "vuetify": "2.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@mdi/font": "7.2.96",
+    "@mdi/js": "7.2.96",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
