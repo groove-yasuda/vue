@@ -9,7 +9,8 @@
                                      color="cyan" size="32"></v-progress-circular>
             </v-avatar>
 
-            <div>{{ param }}さん</div>
+
+
 
 
         </v-sheet>

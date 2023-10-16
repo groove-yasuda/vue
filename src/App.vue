@@ -7,11 +7,10 @@
         <v-app-bar app>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>社員情報管理画面</v-toolbar-title>
-            <v-btn class="ml-auto" v-on:click="LOGOUT" :disabled="!loggeIn">ログアウト</v-btn>
         </v-app-bar>
 
             <v-main>
-                <router-view @loggeIn="get_LoggeIn" style="background-color: #F5F5F5 "></router-view>
+                <router-view @loggeIn="get_LoggeIn" style="background-color: white"></router-view>
             </v-main>
     </v-app>
 </template>
