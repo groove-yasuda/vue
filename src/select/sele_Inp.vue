@@ -25,12 +25,6 @@
 
             <v-row justify="center">
                 <v-col cols="auto">
-                    <v-btn v-on:click="RETURN">戻る</v-btn>
-                </v-col>
-                <v-col cols="auto">
-                    <v-spacer></v-spacer>
-                </v-col>
-                <v-col cols="auto">
                     <v-btn v-on:click="SEARCH" :disabled="!input_Emp_Search">検索</v-btn>
                 </v-col>
             </v-row>
@@ -88,9 +82,6 @@
                         search_Option: this.search_Option,input_Emp_Search: this.input_Emp_Search, search_Target: this.search_Target
                     }
                 });
-            },
-            RETURN() {
-                this.$router.push({ name: 'sel' });
             },
         }
     }

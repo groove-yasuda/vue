@@ -18,12 +18,6 @@
 
             <v-row justify="center">
                 <v-col cols="auto">
-                    <v-btn v-on:click="RETURN">戻る</v-btn>
-                </v-col>
-                <v-col cols="auto">
-                    <v-spacer></v-spacer> 
-                </v-col>
-                <v-col cols="auto">
                     <v-btn v-on:click="UPDATE" :disabled="nameError || idError ||
                            !inputEmpId || !inputEmpName">更新</v-btn>
                 </v-col>
@@ -123,9 +117,6 @@
                         }
 
                     })
-            },
-            RETURN() {
-                this.$router.push({ name: 'sel' });
             },
         }
     }

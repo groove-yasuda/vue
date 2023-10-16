@@ -43,12 +43,6 @@
 
                 <v-row justify="center">
                     <v-col cols="auto">
-                        <v-btn v-on:click="RETURN">戻る</v-btn>
-                    </v-col>
-                    <v-col cols="auto">
-                        <v-spacer></v-spacer>
-                    </v-col>
-                    <v-col cols="auto">
                         <v-btn v-on:click="DELETE" :disabled="nameError || idError ||
                            !inputEmpId || !inputEmpName">削除</v-btn>
                     </v-col>
@@ -151,9 +145,6 @@
             DELETE() {
                 this.birth = this.selectedYear + '/' + this.selectedMonth + '/' + this.selectedDay;
                 this.$router.push({ name: 'dele_Confi', params: { empId: this.inputEmpId, empName: this.inputEmpName,birth: this.birth } });
-            },
-            RETURN() {
-                this.$router.push({ name: 'sel' });
             },
         }
     }

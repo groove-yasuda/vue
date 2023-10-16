@@ -70,12 +70,6 @@
 
                 <v-row justify="center">
                     <v-col cols="auto">
-                        <v-btn v-on:click="RETURN">戻る</v-btn>
-                    </v-col>
-                    <v-col cols="auto">
-                        <v-spacer></v-spacer>
-                    </v-col>
-                    <v-col cols="auto">
                         <v-btn v-on:click="INSERT" :disabled="!inputEmpId || !inputEmpName || !inputKihonkyu || !inputKoutuhi">登録</v-btn>
                     </v-col>
                 </v-row>
@@ -213,9 +207,6 @@
                         kihonkyu: this.inputKihonkyu,koutuhi: this.inputKoutuhi,
                     }
                 });
-            },
-            RETURN() {
-                this.$router.push({ name: 'sel' });
             },
         },
         }
