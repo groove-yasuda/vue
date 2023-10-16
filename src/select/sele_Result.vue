@@ -10,8 +10,6 @@
                 <template>
                     <p v-if="isConditionMet">
                         <v-container>
-                            <v-slider v-model="itemsPerPage"
-                                      :min="1" :max="20" thumb-label="always"></v-slider>
 
                             <v-data-table :headers="headers"
                                           :items="desserts"
