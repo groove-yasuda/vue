@@ -168,7 +168,7 @@
                 }
             },
             checkEmpId() {
-                if (/[A-Z]{1}[0-9]{3}/.test(this.inputEmpId) && !/^(?!.*000).+$/.test(this.inputEmpId)) {
+                if (/[A-Z]{1}[0-9]{3}/.test(this.inputEmpId) && !/^(?!.*000).+$/.test(this.inputEmpId) && /^[\x20-\x7E]*$/.test(this.inputEmpId)) {
                     this.idError = true;
                 } else {
                     this.idError = false;
