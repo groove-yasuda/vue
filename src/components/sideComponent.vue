@@ -46,7 +46,6 @@
             return {
                 links: [
                     ['mdi-account-plus-outline', '登録', 'ins_inp'],
-                    ['mdi-account-sync-outline', '更新', 'upd_inp_before'],
                     ['mdi-account-minus-outline', '削除', 'dele_inp'],
                     ['mdi-account-search-outline', '検索', 'sele_inp'],
                 ],
