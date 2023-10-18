@@ -40,17 +40,17 @@
 
                             <v-row>
                                 <v-col cols="12">
-                                    <hot-table :data="karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="attendance_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="attendance_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                     <br>
-                                    <hot-table :data="karam2" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="data2" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="salary_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="salary_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                     <br>
-                                    <hot-table :data="karam3" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="data3" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="deduction_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="deduction_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                     <br>
-                                    <hot-table :data="karam4" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="data4" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="total_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="total_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -134,36 +134,36 @@
                     { text: '年齢' },
                     { text: '性別' },
                 ],
-                data: [
+                attendance_data: [
                     ["就業日数", "出勤日数", "労働時間", "欠勤日数",""],
                     [],
                     ["残業時間", "休日出勤日数"],
                     [],
                 ],
-                data2: [
+                salary_data: [
                     ["基本給", "通勤手当", "残業代", "固定残業代", "合計"],
                     [],
                 ],
-                data3: [
+                deduction_data: [
                     ["雇用保険", "健康保険", "厚生年金", "","社会保険合計"],
                     [],
                     ["所得税", "住民税", "", "", "税額合計"],
                     [],
                 ],
-                data4: [
+                total_data: [
                     ["総支給額", "", "控除総額","", "差引支給額"],
                     [],
                 ],
-                karam: [
+                attendance_karam: [
                     ["勤怠"],
                 ],
-                karam2: [
+                salary_karam: [
                     ["給与"],
                 ],
-                karam3: [
+                deduction_karam: [
                     ["控除"],
                 ],
-                karam4: [
+                total_karam: [
                     ["合計"],
                 ],
                 settings: {
@@ -248,72 +248,70 @@
                         const overtime_pay = parseFloat(parts[7].split("=")[1]);
                         const Fixed_overtime_pay = parseFloat(parts[8].split("=")[1]);
 
-                        this.data2[1][0] = `¥${basic_salary.toLocaleString()}`;
-                        this.data2[1][1] = `¥${Transportation_expenses.toLocaleString()}`;
-                        this.data2[1][2] = `¥${overtime_pay.toLocaleString()}`;
-                        this.data2[1][3] = `¥${Fixed_overtime_pay.toLocaleString()}`;
-                        this.data2[1][4] = `¥${(basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay).toLocaleString()}`;
+                        this.salary_data[1][0] = `¥${basic_salary.toLocaleString()}`;
+                        this.salary_data[1][1] = `¥${Transportation_expenses.toLocaleString()}`;
+                        this.salary_data[1][2] = `¥${overtime_pay.toLocaleString()}`;
+                        this.salary_data[1][3] = `¥${Fixed_overtime_pay.toLocaleString()}`;
+                        this.salary_data[1][4] = `¥${(basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay).toLocaleString()}`;
 
                         sousikyu = basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay;
 
 
 
-                        const syuugyou = parseFloat(parts[9].split("=")[1]);
-                        const syukkin = parseFloat(parts[10].split("=")[1]);
-                        const roudou = parts[11].split("=")[1];
-                        const kekkin = parseFloat(parts[12].split("=")[1]);
-                        const zangyou = parts[13].split("=")[1];
-                        const kyuusyutu = parts[14].split("=")[1];
+                        const employment = parseFloat(parts[9].split("=")[1]);
+                        const attendance_At_Work = parseFloat(parts[10].split("=")[1]);
+                        const work = parts[11].split("=")[1];
+                        const absenteeism = parseFloat(parts[12].split("=")[1]);
+                        const overtime = parts[13].split("=")[1];
+                        const holiday_Work = parts[14].split("=")[1];
 
 
 
 
                         this.isConditionMet = true;
 
-                        this.data[1][0] = syuugyou + ' 日';
-                        this.data[1][1] = syukkin + ' 日';
-                        this.data[1][2] = roudou + ' 時間';
-                        this.data[1][3] = kyuusyutu + ' 日';
-                        this.data[3][0] = zangyou + ' 時間';
-                        this.data[3][1] = kekkin + ' 日';
-
-
+                        this.attendance_data[1][0] = employment + ' 日';
+                        this.attendance_data[1][1] = attendance_At_Work + ' 日';
+                        this.attendance_data[1][2] = work + ' 時間';
+                        this.attendance_data[1][3] = holiday_Work + ' 日';
+                        this.attendance_data[3][0] = overtime + ' 時間';
+                        this.attendance_data[3][1] = absenteeism + ' 日';
                     });
 
                     list1.forEach((item) => {
                         const parts = item.split(", ");
-                        const koyouhokenritu = parseFloat(parts[0].split("=")[1]);
-                        const kouseinenkinhoken = parseFloat(parts[1].split("=")[1]);
-                        const hokenritu_iryou = parseFloat(parts[3].split("=")[1]);
-                        const syotokuzeikiso = parseFloat(parts[4].split("=")[1]);
-                        const zyuminzeikiso = parseFloat(parts[4].split("=")[1]);
-                        const syotokuzeiritu = parseFloat(parts[6].split("=")[1]);
-                        const zyuminzeiritu = parseFloat(parts[7].split("=")[1]);
-                        const kouzyo = parseFloat(parts[8].split("=")[1]);
-                        const koyouhoken = sousikyu * koyouhokenritu * 0.01;
-                        const kenkouhoken = sousikyu * hokenritu_iryou * 0.5 * 0.01;
-                        const kouseinenkin = sousikyu * kouseinenkinhoken * 0.5 * 0.01;//
-                        const kyuyosyotoku = (sousikyu * 12) - kouzyo;
-                        const kazeikyuyo_syotoku = (kyuyosyotoku - syotokuzeikiso - (kouseinenkin * 12) - (kenkouhoken * 12) - (koyouhoken * 12))/12;
-                        const syotokuzei = kazeikyuyo_syotoku * syotokuzeiritu *0.01;
-                        const kazeikyuyo_zyumin = (kyuyosyotoku - zyuminzeikiso - (kouseinenkin * 12) - (kenkouhoken * 12) - (koyouhoken * 12))/12;
-                        const zyuminzei = kazeikyuyo_zyumin * zyuminzeiritu * 0.01;
-                        const syakaihoken = koyouhoken + kenkouhoken + kouseinenkin;
-                        const zeigaku = syotokuzei + zyuminzei;
-                        const kouzyogaku = syakaihoken + zeigaku;
-                        const sasihikisikyu = sousikyu - kouzyogaku;
+                        const employment_Insurance_Rate = parseFloat(parts[0].split("=")[1]);
+                        const welfare_Pension_Insurancehoken = parseFloat(parts[1].split("=")[1]);
+                        const insurance_Rate_Medical = parseFloat(parts[3].split("=")[1]);
+                        const income_Tax_Basis = parseFloat(parts[4].split("=")[1]);
+                        const resident_Tax_Basics = parseFloat(parts[5].split("=")[1]);
+                        const income_Tax_Rate = parseFloat(parts[6].split("=")[1]);
+                        const resident_Tax_Rate = parseFloat(parts[7].split("=")[1]);
+                        const deduction = parseFloat(parts[8].split("=")[1]);
+                        const employment_Insurance = sousikyu * employment_Insurance_Rate * 0.01;
+                        const health_Insurance = sousikyu * insurance_Rate_Medical * 0.5 * 0.01;
+                        const welfare_Pension_Insurance = sousikyu * welfare_Pension_Insurancehoken * 0.5 * 0.01;//
+                        const employment_Income = (sousikyu * 12) - deduction;
+                        const taxable_Salary_Income = (employment_Income - income_Tax_Basis - (welfare_Pension_Insurance * 12) - (health_Insurance * 12) - (employment_Insurance * 12))/12;
+                        const income_Tax = taxable_Salary_Income * income_Tax_Rate *0.01;
+                        const taxable_Salary_residents = (employment_Income - resident_Tax_Basics - (welfare_Pension_Insurance * 12) - (health_Insurance * 12) - (employment_Insurance * 12))/12;
+                        const resident_Tax = taxable_Salary_residents * resident_Tax_Rate * 0.01;
+                        const social_Insurance = employment_Insurance + health_Insurance + welfare_Pension_Insurance;
+                        const tax_Amount = income_Tax + resident_Tax;
+                        const deduction_Amount = social_Insurance + tax_Amount;
+                        const deduction_Payment_Amount = sousikyu - deduction_Amount;
 
-                        this.data3[1][0] = `¥${koyouhoken.toLocaleString()}`;//雇用保険
-                        this.data3[1][1] = `¥${kenkouhoken.toLocaleString()}`;//健康保険
-                        this.data3[1][2] = `¥${Math.ceil(kouseinenkin).toLocaleString()}`;//厚生年金
-                        this.data3[1][4] = `¥${Math.ceil(syakaihoken).toLocaleString()}`;//社会保険合計
-                        this.data3[3][0] = `¥${Math.ceil(syotokuzei).toLocaleString()}`;//所得税
-                        this.data3[3][1] = `¥${Math.ceil(zyuminzei).toLocaleString()}`;//住民税
-                        this.data3[3][4] = `¥${Math.ceil(zeigaku).toLocaleString()}`;//税額合計
+                        this.deduction_data[1][0] = `¥${employment_Insurance.toLocaleString()}`;//雇用保険
+                        this.deduction_data[1][1] = `¥${health_Insurance.toLocaleString()}`;//健康保険
+                        this.deduction_data[1][2] = `¥${Math.ceil(welfare_Pension_Insurance).toLocaleString()}`;//厚生年金
+                        this.deduction_data[1][4] = `¥${Math.ceil(social_Insurance).toLocaleString()}`;//社会保険合計
+                        this.deduction_data[3][0] = `¥${Math.ceil(income_Tax).toLocaleString()}`;//所得税
+                        this.deduction_data[3][1] = `¥${Math.ceil(resident_Tax).toLocaleString()}`;//住民税
+                        this.deduction_data[3][4] = `¥${Math.ceil(tax_Amount).toLocaleString()}`;//税額合計
 
-                        this.data4[1][0] = `¥${Math.ceil(sousikyu).toLocaleString()}`;//総支給額
-                        this.data4[1][2] = `¥${Math.ceil(kouzyogaku).toLocaleString()}`;//税額合計
-                        this.data4[1][4] = `¥${Math.ceil(sasihikisikyu).toLocaleString()}`;//税額合計    
+                        this.total_data[1][0] = `¥${Math.ceil(sousikyu).toLocaleString()}`;//総支給額
+                        this.total_data[1][2] = `¥${Math.ceil(deduction_Amount).toLocaleString()}`;//税額合計
+                        this.total_data[1][4] = `¥${Math.ceil(deduction_Payment_Amount).toLocaleString()}`;//税額合計
 
                     });
 
@@ -332,16 +330,16 @@
             },
             customRenderer(instance, td) {
                 Handsontable.renderers.TextRenderer.apply(this, arguments);
-                td.className = 'custom-cell'; // セルにクラス名を設定
-                td.style.backgroundColor = 'gray'; // セルの背景色を設定
-                td.style.color = 'black'; // セルのテキスト色を設定
+                td.className = 'custom-cell'; 
+                td.style.backgroundColor = 'gray'; 
+                td.style.color = 'black'; 
                 td.style.fontSize = '20px';
             },
             customKaramRenderer(instance, td) {
                 Handsontable.renderers.TextRenderer.apply(this, arguments);
-                td.className = 'custom-cell'; // セルにクラス名を設定
-                td.style.backgroundColor = 'silver'; // セルの背景色を設定
-                td.style.color = 'black'; // セルのテキスト色を設定
+                td.className = 'custom-cell'; 
+                td.style.backgroundColor = 'silver'; 
+                td.style.color = 'black'; 
                 td.style.fontSize = '20px';
             },
         },

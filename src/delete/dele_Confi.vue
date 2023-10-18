@@ -10,6 +10,7 @@
                 <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
                 <p class="text-center" :style="{'color': 'black'}">社員ID : {{ empId }}</p>
                 <p class="text-center" :style="{'color': 'black'}">社員名 : {{ empName }}</p>
+                <p class="text-center" :style="{'color': 'black'}">生年月日 : {{ birth }}</p>
 
             </v-container>
 
@@ -18,7 +19,7 @@
                     <v-btn v-on:click="RETURN">戻る</v-btn>
                 </v-col>
                 <v-col cols="auto">
-                    <v-spacer></v-spacer> <!-- ここに間隔を開けるスペーサー -->
+                    <v-spacer></v-spacer>
                 </v-col>
                 <v-col cols="auto">
                     <v-btn v-on:click="CONFI">確認</v-btn>

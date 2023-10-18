@@ -201,9 +201,6 @@
             },
             INSERT() {
                 const birth = this.selectedYear + '/' + this.selectedMonth + '/' + this.selectedDay;
-                console.log('birth:', birth);
-                console.log('age:', this.selectedAge);
-                console.log('gender:', this.selectedGender);
                 this.$router.push({
                     name: 'ins_Confi', params: {
                         empId: this.inputEmpId, empName: this.inputEmpName,
