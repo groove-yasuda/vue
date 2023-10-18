@@ -12,7 +12,7 @@
                               hint=" 社員IDをA001～Z999の間の半角英数字で入力して下さい。
                               *社員IDは大文字のアルファベット＋三桁の数字の組み合わせです"
                               :rules="[id_Max_Char]" class="custom-hint-style"></v-text-field>
-                <p v-if="idError" class="error-message">有効な社員IDを入力してください。</p>
+                <p v-if="idError && inputEmpId" class="error-message">有効な社員IDを入力してください。</p>
 
                 <v-text-field label="社員名" clearable v-model="inputEmpName" @input="checkEmpName" counter="255"
                               hint="社員名を255文字以内の全角文字で入力して下さい"
@@ -70,7 +70,7 @@
 
                 <v-row justify="center">
                     <v-col cols="auto">
-                        <v-btn v-on:click="INSERT" :disabled="!inputEmpId || !inputEmpName || !inputKihonkyu || !inputKoutuhi">登録</v-btn>
+                        <v-btn v-on:click="INSERT" :disabled="!inputEmpId || !inputEmpName || !inputKihonkyu || !inputKoutuhi || !idError == false || !nameError == false">登録</v-btn>
                     </v-col>
                 </v-row>
 
@@ -168,11 +168,15 @@
                 }
             },
             checkEmpId() {
-                if (/[A-Z]{1}[0-9]{3}/.test(this.inputEmpId) && !/^(?!.*000).+$/.test(this.inputEmpId) && /^[\x20-\x7E]*$/.test(this.inputEmpId)) {
-                    this.idError = true;
+                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.inputEmpId)) {
+                    if (!/[A-Z]{1}[0-9]{3}/.test(this.inputEmpId) || !/^(?!.*000).+$/.test(this.inputEmpId)) {
+                        this.idError = true;
+                    } else {
+                        this.idError = false;
+                    }
                 } else {
-                    this.idError = false;
-                }
+                this.idError = true;
+            }
             },
             checkEmpName() {
                 if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.inputEmpName)) {

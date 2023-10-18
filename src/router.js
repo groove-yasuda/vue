@@ -15,6 +15,7 @@ import sele_Inp from './select/sele_Inp.vue'
 import sele_Result from './select/sele_Result.vue'
 import sele_Detail from './select/sele_Detail.vue'
 import user_Login from './login/user_Login.vue'
+import test_Test from './login/test_Test.vue'
 
 Vue.use(VueRouter)
 
@@ -93,6 +94,11 @@ const routes = [
         path: '/sele_result',
         name: 'sele_Result',
         component: sele_Result
+    },
+    {
+        path: '/test_test',
+        name: 'test_Test',
+        component: test_Test
     },
 ]
 
