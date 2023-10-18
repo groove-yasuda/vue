@@ -1,13 +1,8 @@
 ﻿<template>
     <v-app id="inspire">
         <v-sheet color="#90A4AE"
-                 class="pa-4">
-            <v-avatar class="mb-4"
-                      color="grey darken-1"
-                      size="64">
-                <v-progress-circular indeterminate
-                                     color="cyan" size="32"></v-progress-circular>
-            </v-avatar>
+                 class="pa-4" height= 20%>
+
 
 
 
