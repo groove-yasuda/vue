@@ -157,7 +157,7 @@
                 if (value.length <= 4) {
                     return true;
                 } else {
-                    return '社員IDは4文字以下で入力してください';
+                    return '社員IDは4文字で入力してください';
                 }
             },
             name_Max_Char(value) {
