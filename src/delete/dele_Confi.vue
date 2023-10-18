@@ -68,7 +68,7 @@
                             this.$router.push({ name: 'dele_Comp' });
                         }
                         else if (response.data === false) {
-                            this.errorMessage = '入力された社員IDは登録されていません。';
+                            this.errorMessage = '入力された社員情報は登録されていません。';
                             this.$router.push({ name: 'dele_Confi' });
                         }
 
