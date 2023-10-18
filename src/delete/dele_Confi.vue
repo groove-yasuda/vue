@@ -7,9 +7,9 @@
                 <p>確認画面</p>
                 <p>以下の社員情報を削除します。</p>
                 <p>間違いがなければ確認ボタンを押してください</p>
-                <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-                <p class="text-center" :style="{'color': 'black'}">社員ID : {{ empId }}</p>
-                <p class="text-center" :style="{'color': 'black'}">社員名 : {{ empName }}</p>
+                <p v-if="error_Message" class="error-message">{{ error_Message }}</p>
+                <p class="text-center" :style="{'color': 'black'}">社員ID : {{ emp_Id }}</p>
+                <p class="text-center" :style="{'color': 'black'}">社員名 : {{ emp_Name }}</p>
                 <p class="text-center" :style="{'color': 'black'}">生年月日 : {{ birth }}</p>
 
             </v-container>
@@ -36,17 +36,16 @@
     export default {
         data() {
             return {
-                errorMessage: '',
-                messageVisible:false,
-                empId: '', // 社員IDを保持するデータ
-                empName: '', // 社員名を保持するデータ
+                error_Message: '',
+                emp_Id: '', // 社員IDを保持するデータ
+                emp_Name: '', // 社員名を保持するデータ
                 birth: '', // 生年月日を保持するデータ
             };
         },
         created() {
             // ルーターからパラメータを取得してデータに代入
-            this.empId = this.$route.params.empId;
-            this.empName = this.$route.params.empName;
+            this.emp_Id = this.$route.params.emp_Id;
+            this.emp_Name = this.$route.params.emp_Name;
             this.birth = this.$route.params.birth;
         }, 
         methods: {
@@ -59,8 +58,8 @@
                         method: 'POST',
                         url: 'http://localhost:8080/delete_Func',
                         data: {
-                            idOver: this.empId,
-                            nameOver: this.empName,
+                            id_Over: this.emp_Id,
+                            name_Over: this.emp_Name,
                             birth: this.birth,
                         }
                     })
@@ -69,7 +68,7 @@
                             this.$router.push({ name: 'dele_Comp' });
                         }
                         else if (response.data === false) {
-                            this.errorMessage = '入力された社員情報は登録されていません。';
+                            this.error_Message = '入力された社員情報は登録されていません。';
                             this.$router.push({ name: 'dele_Confi' });
                         }
 

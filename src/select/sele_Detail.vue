@@ -8,13 +8,13 @@
 
 
                 <template>
-                    <p v-if="isConditionMet">
+                    <p v-if="is_Condition_Met">
                         <v-container>
                             <v-row>
                                 <v-col cols="12">
                                     <v-data-table :headers="headers"
                                                   :items="desserts"
-                                                  :items-per-page="itemsPerPage"
+                                                  :items-per-page="items_Per_Page"
                                                   class="elevation-10"
                                                   height="100px"
                                                   :footer-props="{
@@ -40,17 +40,17 @@
 
                             <v-row>
                                 <v-col cols="12">
-                                    <hot-table :data="attendance_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="attendance_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="attendance_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="attendance_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                     <br>
-                                    <hot-table :data="salary_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="salary_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="salary_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="salary_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                     <br>
-                                    <hot-table :data="deduction_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="deduction_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="deduction_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="deduction_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                     <br>
-                                    <hot-table :data="total_karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="total_data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="total_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                                    <hot-table :data="total_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -117,7 +117,7 @@
     export default {
         data() {
             return {
-                itemsPerPage: 1,
+                items_Per_Page: 1,
                 search_Prime: '',
                 search_Option: '',
                 id_Order: '',
@@ -125,7 +125,7 @@
                 search_Target: '',
                 response_Data: [],
                 syainID: '',
-                isConditionMet: false,
+                is_Condition_Met: false,
                 desserts: [],
                 headers: [
                     { text: '社員ID' },
@@ -134,36 +134,36 @@
                     { text: '年齢' },
                     { text: '性別' },
                 ],
-                attendance_data: [
+                attendance_Data: [
                     ["就業日数", "出勤日数", "労働時間", "欠勤日数",""],
                     [],
                     ["残業時間", "休日出勤日数"],
                     [],
                 ],
-                salary_data: [
+                salary_Data: [
                     ["基本給", "通勤手当", "残業代", "固定残業代", "合計"],
                     [],
                 ],
-                deduction_data: [
+                deduction_Data: [
                     ["雇用保険", "健康保険", "厚生年金", "","社会保険合計"],
                     [],
                     ["所得税", "住民税", "", "", "税額合計"],
                     [],
                 ],
-                total_data: [
+                total_Data: [
                     ["総支給額", "", "控除総額","", "差引支給額"],
                     [],
                 ],
-                attendance_karam: [
+                attendance_Karam: [
                     ["勤怠"],
                 ],
-                salary_karam: [
+                salary_Karam: [
                     ["給与"],
                 ],
-                deduction_karam: [
+                deduction_Karam: [
                     ["控除"],
                 ],
-                total_karam: [
+                total_Karam: [
                     ["合計"],
                 ],
                 settings: {
@@ -173,7 +173,7 @@
                     cells: (row) => {
                         if (row === 0 || row === 2) {
                             return {
-                                renderer: this.customRenderer,
+                                renderer: this.custom_Renderer,
                             };
                         }
                     },
@@ -185,7 +185,7 @@
                     cells: (row) => {
                         if (row === 0 || row === 2) {
                             return {
-                                renderer: this.customKaramRenderer,
+                                renderer: this.custom_Karam_Renderer,
                             };
                         }
                     },
@@ -219,15 +219,15 @@
                     }
                 })
                 .then((response) => {
-                        const data = response.data; // レスポンスデータを取得
+                    const data = response.data; // レスポンスデータを取得
 
-                        const list0 = data["key0"]; // "key0"のリストを取得
-                        const list1 = data["key1"]; // "key1"のリストを取得
+                    const list_Employee_Information = data["key0"]; // "key0"のリストを取得
+                    const list_Deduction = data["key1"]; // "key1"のリストを取得
 
                     let sousikyu;
 
 
-                    list0.forEach((item) => {
+                    list_Employee_Information.forEach((item) => {
                         const parts = item.split(", ");
                         const syainID = parts[0].split("=")[1];
                         const syainNAME = parts[1].split("=")[1];
@@ -248,11 +248,11 @@
                         const overtime_pay = parseFloat(parts[7].split("=")[1]);
                         const Fixed_overtime_pay = parseFloat(parts[8].split("=")[1]);
 
-                        this.salary_data[1][0] = `¥${basic_salary.toLocaleString()}`;
-                        this.salary_data[1][1] = `¥${Transportation_expenses.toLocaleString()}`;
-                        this.salary_data[1][2] = `¥${overtime_pay.toLocaleString()}`;
-                        this.salary_data[1][3] = `¥${Fixed_overtime_pay.toLocaleString()}`;
-                        this.salary_data[1][4] = `¥${(basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay).toLocaleString()}`;
+                        this.salary_Data[1][0] = `¥${basic_salary.toLocaleString()}`;
+                        this.salary_Data[1][1] = `¥${Transportation_expenses.toLocaleString()}`;
+                        this.salary_Data[1][2] = `¥${overtime_pay.toLocaleString()}`;
+                        this.salary_Data[1][3] = `¥${Fixed_overtime_pay.toLocaleString()}`;
+                        this.salary_Data[1][4] = `¥${(basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay).toLocaleString()}`;
 
                         sousikyu = basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay;
 
@@ -268,17 +268,17 @@
 
 
 
-                        this.isConditionMet = true;
+                        this.is_Condition_Met = true;
 
-                        this.attendance_data[1][0] = employment + ' 日';
-                        this.attendance_data[1][1] = attendance_At_Work + ' 日';
-                        this.attendance_data[1][2] = work + ' 時間';
-                        this.attendance_data[1][3] = holiday_Work + ' 日';
-                        this.attendance_data[3][0] = overtime + ' 時間';
-                        this.attendance_data[3][1] = absenteeism + ' 日';
+                        this.attendance_Data[1][0] = employment + ' 日';
+                        this.attendance_Data[1][1] = attendance_At_Work + ' 日';
+                        this.attendance_Data[1][2] = work + ' 時間';
+                        this.attendance_Data[1][3] = holiday_Work + ' 日';
+                        this.attendance_Data[3][0] = overtime + ' 時間';
+                        this.attendance_Data[3][1] = absenteeism + ' 日';
                     });
 
-                    list1.forEach((item) => {
+                    list_Deduction.forEach((item) => {
                         const parts = item.split(", ");
                         const employment_Insurance_Rate = parseFloat(parts[0].split("=")[1]);
                         const welfare_Pension_Insurancehoken = parseFloat(parts[1].split("=")[1]);
@@ -301,17 +301,17 @@
                         const deduction_Amount = social_Insurance + tax_Amount;
                         const deduction_Payment_Amount = sousikyu - deduction_Amount;
 
-                        this.deduction_data[1][0] = `¥${employment_Insurance.toLocaleString()}`;//雇用保険
-                        this.deduction_data[1][1] = `¥${health_Insurance.toLocaleString()}`;//健康保険
-                        this.deduction_data[1][2] = `¥${Math.ceil(welfare_Pension_Insurance).toLocaleString()}`;//厚生年金
-                        this.deduction_data[1][4] = `¥${Math.ceil(social_Insurance).toLocaleString()}`;//社会保険合計
-                        this.deduction_data[3][0] = `¥${Math.ceil(income_Tax).toLocaleString()}`;//所得税
-                        this.deduction_data[3][1] = `¥${Math.ceil(resident_Tax).toLocaleString()}`;//住民税
-                        this.deduction_data[3][4] = `¥${Math.ceil(tax_Amount).toLocaleString()}`;//税額合計
+                        this.deduction_Data[1][0] = `¥${employment_Insurance.toLocaleString()}`;//雇用保険
+                        this.deduction_Data[1][1] = `¥${health_Insurance.toLocaleString()}`;//健康保険
+                        this.deduction_Data[1][2] = `¥${Math.ceil(welfare_Pension_Insurance).toLocaleString()}`;//厚生年金
+                        this.deduction_Data[1][4] = `¥${Math.ceil(social_Insurance).toLocaleString()}`;//社会保険合計
+                        this.deduction_Data[3][0] = `¥${Math.ceil(income_Tax).toLocaleString()}`;//所得税
+                        this.deduction_Data[3][1] = `¥${Math.ceil(resident_Tax).toLocaleString()}`;//住民税
+                        this.deduction_Data[3][4] = `¥${Math.ceil(tax_Amount).toLocaleString()}`;//税額合計
 
-                        this.total_data[1][0] = `¥${Math.ceil(sousikyu).toLocaleString()}`;//総支給額
-                        this.total_data[1][2] = `¥${Math.ceil(deduction_Amount).toLocaleString()}`;//税額合計
-                        this.total_data[1][4] = `¥${Math.ceil(deduction_Payment_Amount).toLocaleString()}`;//税額合計
+                        this.total_Data[1][0] = `¥${Math.ceil(sousikyu).toLocaleString()}`;//総支給額
+                        this.total_Data[1][2] = `¥${Math.ceil(deduction_Amount).toLocaleString()}`;//税額合計
+                        this.total_Data[1][4] = `¥${Math.ceil(deduction_Payment_Amount).toLocaleString()}`;//税額合計
 
                     });
 
@@ -328,14 +328,14 @@
                     }
                 });
             },
-            customRenderer(instance, td) {
+            custom_Renderer(instance, td) {
                 Handsontable.renderers.TextRenderer.apply(this, arguments);
                 td.className = 'custom-cell'; 
                 td.style.backgroundColor = 'gray'; 
                 td.style.color = 'black'; 
                 td.style.fontSize = '20px';
             },
-            customKaramRenderer(instance, td) {
+            custom_Karam_Renderer(instance, td) {
                 Handsontable.renderers.TextRenderer.apply(this, arguments);
                 td.className = 'custom-cell'; 
                 td.style.backgroundColor = 'silver'; 

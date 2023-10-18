@@ -29,12 +29,6 @@
 
 <script>
     export default {
-        data() {
-            return {
-                inputEmpId: '', // 社員IDのデータ
-                inputEmpName: '', // 社員名のデータ
-            };
-        },
         methods: {
             RET_INP() {
                this.$router.push({ name: 'ins_Inp' });

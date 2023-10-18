@@ -7,14 +7,14 @@
                 <p>確認画面</p>
                 <p>以下の内容で登録します。</p>
                 <p>間違いがなければ確認ボタンを押してください</p>
-                <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-                <p class="text-center" :style="{'color': 'black'}">社員ID : {{ empId }}</p>
-                <p class="text-center" :style="{'color': 'black'}">社員名 : {{ empName }}</p>
+                <p v-if="error_Message" class="error_Message">{{ error_Message }}</p>
+                <p class="text-center" :style="{'color': 'black'}">社員ID : {{ emp_Id }}</p>
+                <p class="text-center" :style="{'color': 'black'}">社員名 : {{ emp_Name }}</p>
                 <p class="text-center" :style="{'color': 'black'}">生年月日 : {{ birth }}</p>
                 <p class="text-center" :style="{'color': 'black'}">年齢 : {{ age }}</p>
                 <p class="text-center" :style="{'color': 'black'}">性別 : {{ gender }}</p>
-                <p class="text-center" :style="{'color': 'black'}">基本給 : {{ kihonkyu }}円</p>
-                <p class="text-center" :style="{'color': 'black'}">交通費 : {{ koutuhi }}円</p>
+                <p class="text-center" :style="{'color': 'black'}">基本給 : {{ basic_Salary }}円</p>
+                <p class="text-center" :style="{'color': 'black'}">交通費 : {{ transport_Expens }}円</p>
 
 
             </v-container>
@@ -41,26 +41,25 @@
     export default {
         data() {
             return {
-                errorMessage: '',
-                messageVisible:false,
-                empId: '', 
-                empName: '',
+                error_Message: '',
+                emp_Id: '', 
+                emp_Name: '',
                 birth: '',
                 age: '',
                 gender: '',
-                kihonkyu: '',
-                koutuhi:'',
+                basic_Salary: '',
+                transport_Expens:'',
             };
         },
         created() {
 
-            this.empId = this.$route.params.empId;
-            this.empName = this.$route.params.empName;
+            this.emp_Id = this.$route.params.emp_Id;
+            this.emp_Name = this.$route.params.emp_Name;
             this.birth = this.$route.params.birth;
             this.age = this.$route.params.age;
             this.gender = this.$route.params.gender;
-            this.kihonkyu = this.$route.params.kihonkyu;
-            this.koutuhi = this.$route.params.koutuhi;
+            this.basic_Salary = this.$route.params.basic_Salary;
+            this.transport_Expens = this.$route.params.transport_Expens;
         },
         methods: {
             RETURN() {
@@ -72,13 +71,13 @@
                         method: 'POST',
                         url: 'http://localhost:8080/insert_Func',
                         data: {
-                            idOver: this.empId,
-                            nameOver: this.empName,
+                            id_Over: this.emp_Id,
+                            name_Over: this.emp_Name,
                             birth: this.birth,
                             age: this.age,
                             gender: this.gender,
-                            kihonkyu: this.kihonkyu,
-                            koutuhi: this.koutuhi,
+                            basic_Salary: this.basic_Salary,
+                            transport_Expens: this.transport_Expens,
                         }
                     })
                     .then((response) => {
@@ -86,7 +85,7 @@
                             this.$router.push({ name: 'ins_Comp' });
                         }
                         else if (response.data === false) {
-                            this.errorMessage = '入力された社員IDはすでに登録されています。';
+                            this.error_Message = '入力された社員IDはすでに登録されています。';
                             this.$router.push({ name: 'ins_Confi' });
                         }
 

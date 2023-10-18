@@ -8,34 +8,34 @@
                 <p>削除対象入力画面</p>
 
 
-                    <v-text-field label="社員ID" clearable v-model="inputEmpId" @input="checkEmpId" counter="4"
+                    <v-text-field label="社員ID" clearable v-model="input_Emp_Id" @input="check_Emp_Id" counter="4"
                                   hint=" 社員IDをA001～Z999の間の半角英数字で入力して下さい。
                               *社員IDは大文字のアルファベット＋三桁の数字の組み合わせです"
                                   :rules="[id_Max_Char]" class="custom-hint-style"></v-text-field>
-                    <p v-if="idError" class="error-message">有効な社員IDを入力してください。</p>
+                    <p v-if="id_Error" class="error-message">有効な社員IDを入力してください。</p>
 
-                    <v-text-field label="社員名" clearable v-model="inputEmpName" @input="checkEmpName" counter="255"
+                    <v-text-field label="社員名" clearable v-model="input_Emp_Name" @input="check_Emp_Name" counter="255"
                                   hint="社員名を255文字以内の全角文字で入力して下さい"
                                   :rules="[name_Max_Char]" class="custom-hint-style"></v-text-field>
-                    <p v-if="nameError" class="error-message">有効な社員名を入力してください。</p>
+                    <p v-if="name_Error" class="error-message">有効な社員名を入力してください。</p>
 
             </v-container>
             <br>
             <v-row justify="center">
                 <div>
                     <label for="year">生年月日:</label>
-                    <select v-model="selectedYear" id="year" class="select-dropdown">
-                        <option v-for="year in yearRange" :value="year" :key="year">{{ year }}</option>
+                    <select v-model="selected_Year" id="year" class="select-Dropdown">
+                        <option v-for="year in year_Range" :value="year" :key="year">{{ year }}</option>
                     </select>年
 
                     <label for="month"></label>
-                    <select v-model="selectedMonth" id="month" class="select-dropdown">
+                    <select v-model="selected_Month" id="month" class="select-Dropdown">
                         <option v-for="month in months" :value="month" :key="month">{{ month }}</option>
                     </select>月
 
                     <label for="day"></label>
-                    <select v-model="selectedDay" id="day" class="select-dropdown">
-                        <option v-for="day in dayRange" :value="day" :key="day">{{ day }}</option>
+                    <select v-model="selected_Day" id="day" class="select-Dropdown">
+                        <option v-for="day in day_Range" :value="day" :key="day">{{ day }}</option>
                     </select>日
                 </div>
             </v-row>
@@ -43,8 +43,8 @@
 
                 <v-row justify="center">
                     <v-col cols="auto">
-                        <v-btn v-on:click="DELETE" :disabled="nameError || idError ||
-                           !inputEmpId || !inputEmpName">削除</v-btn>
+                        <v-btn v-on:click="DELETE" :disabled="name_Error || id_Error ||
+                           !input_Emp_Id || !input_Emp_Name">削除</v-btn>
                     </v-col>
                 </v-row>
 
@@ -65,34 +65,40 @@
         font-size: 11px; /* ヒントの文字サイズを設定 */
         color: #333;
     }
+    .select-Dropdown {
+        padding: 5px; /* パディングを追加して選択肢が見やすくなります */
+        border: 1px solid #ccc; /* ボーダーを追加してプルダウンの境界を明示的に表示します */
+        border-radius: 4px; /* 角を丸くすることで視覚的に魅力的になります */
+        background-color: white; /* 背景色を白に設定します */
+        font-size: 18px; /* フォントサイズを調整できます */
+        width: 65px; /* 幅を調整できます */
+    }
 </style>
 
 <script>
-    import axios from 'axios';
     export default {
         data() {
             return {
-                inputEmpId: '',
-                idError: false,
-                inputEmpName: '', 
-                nameError: false,
-                errorMessage: '',
+                input_Emp_Id: '',
+                id_Error: false,
+                input_Emp_Name: '', 
+                name_Error: false,
                 years: [1990], // 生年月日の年の選択肢
                 months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], // 生年月日の月の選択肢
                 days: [1], // 生年月日の日の選択肢
-                selectedYear: 2000, // 選択された年
-                selectedMonth: 1, // 選択された月
-                selectedDay: 1, // 選択された日
+                selected_Year: 2000, // 選択された年
+                selected_Month: 1, // 選択された月
+                selected_Day: 1, // 選択された日
                 birth:'',
             };
         },
         computed: {
-            yearRange() {
-                const currentYear = new Date().getFullYear();
-                const startYear = currentYear - 100; // 100年分の範囲を生成
-                return Array.from({ length: 101 }, (_, i) => startYear + i);
+            year_Range() {
+                const current_Year = new Date().getFullYear();
+                const start_Year = current_Year - 100; // 100年分の範囲を生成
+                return Array.from({ length: 101 }, (_, i) => start_Year + i);
             },
-            dayRange() {
+            day_Range() {
                 return Array.from({ length: 31 }, (_, i) => i + 1); // 日の選択肢を1から31まで生成
             },
         },
@@ -111,40 +117,28 @@
                     return '社員名は255文字以下で入力してください'; 
                 }
             },
-            checkEmpId() {
-                axios.request({
-                    method: 'POST',
-                    url: 'http://localhost:8080/id_Check',
-                    data: {
-                        idOver: this.inputEmpId,
+            check_Emp_Id() {
+                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.input_Emp_Id)) {
+                    if (!/[A-Z]{1}[0-9]{3}/.test(this.input_Emp_Id) || !/^(?!.*000).+$/.test(this.input_Emp_Id)) {
+                        this.id_Error = true;
+                    } else {
+                        this.id_Error = false;
                     }
-                })
-                    .then((response) => {
-                        if (response.data === 1) {
-                            this.errorMessage = '';
-                            if (/[A-Z]{1}[0-9]{3}/.test(this.inputEmpId) && !/^(?!.*000).+$/.test(this.inputEmpId)) {
-                                this.idError = true;
-                            } else {
-                                this.idError = false;
-                            }
-
-                        } else if (response.data === 0) {
-                            this.errorMessage = true;
-                            this.idError = false;
-                        }
-                    })
-            },
-            checkEmpName() {
-                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.inputEmpName)) {
-                    this.nameError = true;
                 } else {
-                    this.nameError = false;
+                    this.id_Error = true;
+                }
+            },
+            check_Emp_Name() {
+                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.input_Emp_Name)) {
+                    this.name_Error = true;
+                } else {
+                    this.name_Error = false;
                 }
             },
 
             DELETE() {
-                this.birth = this.selectedYear + '/' + this.selectedMonth + '/' + this.selectedDay;
-                this.$router.push({ name: 'dele_Confi', params: { empId: this.inputEmpId, empName: this.inputEmpName,birth: this.birth } });
+                this.birth = this.selected_Year + '/' + this.selected_Month + '/' + this.selected_Day;
+                this.$router.push({ name: 'dele_Confi', params: { emp_Id: this.input_Emp_Id, emp_Name: this.input_Emp_Name,birth: this.birth } });
             },
         }
     }

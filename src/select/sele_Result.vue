@@ -8,12 +8,12 @@
 
 
                 <template>
-                    <p v-if="isConditionMet">
+                    <p v-if="is_Condition_Met">
                         <v-container>
 
                             <v-data-table :headers="headers"
                                           :items="desserts"
-                                          :items-per-page="itemsPerPage"
+                                          :items-per-page="items_Per_Page"
                                           class="elevation-10"
                                           height="600px"
                                           :footer-props="{
@@ -83,7 +83,7 @@
     export default {
         data() {
             return {
-                itemsPerPage: 5,
+                items_Per_Page: 5,
                 search_Prime: '',
                 search_Option: '',
                 id_Order: '',
@@ -91,7 +91,7 @@
                 input_Emp_Search: '', 
                 search_Target: '',
                 response_Data: [],
-                isConditionMet: false,
+                is_Condition_Met: false,
                 desserts: [],
                 headers: [
                     {text: '社員ID'},
@@ -129,7 +129,7 @@
                         const parts = item.split(", ");
                         const syainID = parts[0].split("=")[1];
                         const syainNAME = parts[1].split("=")[1];
-                        this.isConditionMet = true;
+                        this.is_Condition_Met = true;
 
                         return {
                             '社員ID': syainID,
