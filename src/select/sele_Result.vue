@@ -8,6 +8,11 @@
 
 
                 <template>
+                    <p v-if="isLoading && !is_Condition_Met">
+                        ローディング中...
+                    </p>
+
+
                     <p v-if="is_Condition_Met">
                         <v-container>
 
@@ -91,7 +96,8 @@
                 input_Emp_Search: '', 
                 search_Target: '',
                 response_Data: [],
-                is_Condition_Met: false,
+                is_Condition_Met:"",
+                isLoading: true,
                 desserts: [],
                 headers: [
                     {text: '社員ID'},
@@ -110,6 +116,8 @@
             this.search_Target = this.$route.params.search_Target;
         },
         mounted() {
+            this.isLoading = true;
+            this.is_Condition_Met = true;
             axios
                 .request({
                     method: 'POST',
@@ -124,19 +132,25 @@
                     }
                 })
                 .then((response) => {
+                    if (response.data && Array.isArray(response.data)) {
 
-                    this.desserts = response.data.map((item) => {
-                        const parts = item.split(", ");
-                        const syainID = parts[0].split("=")[1];
-                        const syainNAME = parts[1].split("=")[1];
-                        this.is_Condition_Met = true;
+                        this.desserts = response.data.map((item) => {
+                            const parts = item.split(", ");
+                            const syainID = parts[0].split("=")[1];
+                            const syainNAME = parts[1].split("=")[1];
+                            this.isLoading = false;
+                            this.is_Condition_Met = true;
 
-                        return {
-                            '社員ID': syainID,
-                            '社員名': syainNAME
+                            return {
+                                '社員ID': syainID,
+                                '社員名': syainNAME
 
-                        };
-                    });
+                            };
+                        });
+                    } else {
+                        this.isLoading = false;
+                        this.is_Condition_Met = false;
+                    }
 
                 })
         },
@@ -146,8 +160,6 @@
                 this.$router.push({ name: 'sele_Inp' });
             },
             onButtonClick(item) {
-                const syainID = item['社員ID'];
-                console.log('クリックされた行の社員ID:', syainID);
                 this.$router.push({
                     name: 'sele_Detail', params: {
                         syainID: item['社員ID'], search_Prime: this.search_Prime, search_Option: this.search_Option,
