@@ -41,7 +41,6 @@
                             </v-data-table>
                         </v-container>
                     </p>
-                    <p v-else>検索結果が存在しません</p>
                 </template>
 
             </v-container>
@@ -104,10 +103,12 @@
                     { text: '社員名' },
                     { text: '詳細' },
                 ],
+                error_Message: '',
             };
         },
         created() {
             // ルーターからパラメータを取得してデータに代入
+            this.error_Message = this.$route.params.error_Message;
             this.search_Prime = this.$route.params.search_Prime;
             this.search_Option = this.$route.params.search_Option;
             this.id_Order = this.$route.params.id_Order;
@@ -117,7 +118,7 @@
         },
         mounted() {
             this.isLoading = true;
-            this.is_Condition_Met = true;
+            this.is_Condition_Met = false;
             axios
                 .request({
                     method: 'POST',
@@ -132,8 +133,13 @@
                     }
                 })
                 .then((response) => {
-                    if (response.data && Array.isArray(response.data)) {
+                    console.log(response.data);
+                    if (response.data == '') {
+                        const error_Message = '検索結果が存在しません';
+                        this.$router.push({ name: 'sele_Inp', params: { error_Message: error_Message } });
 
+
+                    } else {
                         this.desserts = response.data.map((item) => {
                             const parts = item.split(", ");
                             const syainID = parts[0].split("=")[1];
@@ -147,9 +153,6 @@
 
                             };
                         });
-                    } else {
-                        this.isLoading = false;
-                        this.is_Condition_Met = false;
                     }
 
                 })
