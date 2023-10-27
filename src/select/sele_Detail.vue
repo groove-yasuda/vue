@@ -10,6 +10,7 @@
                 <template>
                     <p v-if="isLoading && !is_Condition_Met">
                         ローディング中...
+                        <v-progress-circular color="primary" indeterminate></v-progress-circular>
                     </p>
 
                     <p v-if="is_Condition_Met">
@@ -129,6 +130,7 @@
                 search_Target: '',
                 response_Data: [],
                 syainID: '',
+                page: '',
                 is_Condition_Met: '',
                 isLoading: true,
                 desserts: [],
@@ -208,6 +210,7 @@
             this.name_Order = this.$route.params.name_Order;
             this.input_Emp_Search = this.$route.params.input_Emp_Search;
             this.search_Target = this.$route.params.search_Target;
+            this.page = this.$route.params.page;
         },
         mounted() {
             axios
@@ -345,7 +348,7 @@
                     name: 'sele_Result', params: {
                         search_Prime: this.search_Prime, search_Option: this.search_Option,
                         id_Order: this.id_Order, name_Order: this.name_Order,
-                        input_Emp_Search: this.input_Emp_Search, search_Target: this.search_Target
+                        input_Emp_Search: this.input_Emp_Search, search_Target: this.search_Target, page: this.page
                     }
                 });
             },
