@@ -19,15 +19,10 @@
                                 <v-col cols="12">
                                     <v-data-table :headers="headers"
                                                   :items="desserts"
-                                                  :items-per-page="items_Per_Page"
                                                   class="elevation-10"
                                                   height="100px"
-                                                  :footer-props="{
-                                          showFirstLastPage: true,
-                                          firstIcon: 'mdi-arrow-collapse-left',
-                                          lastIcon: 'mdi-arrow-collapse-right',
-                                          prevIcon: 'mdi-minus',
-                                          nextIcon: 'mdi-plus'}">
+                                                  :footer-props="{itemsPerPageOptions: []}"
+                                                  >
 
 
                                         <template v-slot:item="{ item }">
@@ -355,8 +350,8 @@
             custom_Renderer(instance, td) {
                 Handsontable.renderers.TextRenderer.apply(this, arguments);
                 td.className = 'custom-cell'; 
-                td.style.backgroundColor = 'gray'; 
-                td.style.color = 'black'; 
+                td.style.backgroundColor = '#2196F3';
+                td.style.color = 'white'; 
                 td.style.fontSize = '20px';
             },
             custom_Karam_Renderer(instance, td) {
