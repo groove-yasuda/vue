@@ -177,6 +177,11 @@
                                 renderer: this.custom_Renderer,
                             };
                         }
+                        if (row === 1 || row === 3) {
+                            return {
+                                renderer: this.custom_char_Renderer,
+                            };
+                        }
                     },
                 },
                 set: {
@@ -358,6 +363,13 @@
                 td.className = 'custom-cell'; 
                 td.style.backgroundColor = 'silver'; 
                 td.style.color = 'black'; 
+                td.style.fontSize = '20px';
+            },
+            custom_char_Renderer(instance, td) {
+                Handsontable.renderers.TextRenderer.apply(this, arguments);
+                td.className = 'custom-cell';
+                td.style.backgroundColor = 'white';
+                td.style.color = 'black';
                 td.style.fontSize = '20px';
             },
         },
