@@ -100,7 +100,6 @@
                 selected_Year: 2000, // 選択された年
                 selected_Month: 1, // 選択された月
                 selected_Day: 1, // 選択された日
-                selected_Age:20,
                 selected_Gender: '男性',
                 gender_Option: ['男性', '女性'],
                 error_Message:'',
@@ -123,6 +122,12 @@
         methods: {
             INSERT() {
                 const birth = this.selected_Year + '/' + this.selected_Month + '/' + this.selected_Day;
+                const today = new Date();
+                let Age = today.getFullYear() - this.selected_Year;
+                const monthDiff = today.getMonth() - this.selected_Month;
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < this.selected_Day)) {
+                    Age = Age - 1;
+                }
                 let hasError = false; 
 
                 if (!/^[A-Z]{1}[0-9]{3}$/.test(this.input_Emp_Id) || !/^(?!.*000).+$/.test(this.input_Emp_Id)) {
@@ -157,7 +162,7 @@
                     this.$router.push({
                         name: 'ins_Confi', params: {
                             emp_Id: this.input_Emp_Id, emp_Name: this.input_Emp_Name,
-                            birth: birth, age: this.selected_Age, gender: this.selected_Gender,
+                            birth: birth, age: Age, gender: this.selected_Gender,
                             basic_Salary: this.input_Basic_Salary, transport_Expens: this.input_Transport_Expens,
                         }
                     });

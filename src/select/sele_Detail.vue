@@ -117,7 +117,6 @@
     export default {
         data() {
             return {
-                items_Per_Page: 1,
                 search_Prime: '',
                 search_Option: '',
                 id_Order: '',
