@@ -9,7 +9,7 @@
 
                 <template>
                     <p v-if="isLoading && !is_Condition_Met">
-                        ローディング中...
+                        now loading...
                         <v-progress-circular color="primary" indeterminate></v-progress-circular>
                     </p>
 
@@ -227,10 +227,10 @@
                 })
                 .then((response) => {
                     if (response.data && "key0" in response.data && "key1" in response.data) {
-                        const data = response.data; // レスポンスデータを取得
+                        const data = response.data;
 
-                        const list_Employee_Information = data["key0"]; // "key0"のリストを取得
-                        const list_Deduction = data["key1"]; // "key1"のリストを取得
+                        const list_Employee_Information = data["key0"];
+                        const list_Deduction = data["key1"];
 
                         let sousikyu;
                         let Age;
