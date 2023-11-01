@@ -137,21 +137,21 @@
                     this.id_Error = false;
                 }
 
-                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.input_Emp_Name)) {
+                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.input_Emp_Name) || 1 > this.input_Emp_Name.length || this.input_Emp_Name.length > 256 ) {
                     this.name_Error = true;
                     hasError = true;
                 } else {
                     this.name_Error = false;
                 }
 
-                if (!/^[0-9]*$/.test(this.input_Basic_Salary)) {
+                if (!/^[0-9]*$/.test(this.input_Basic_Salary) || 1 >  this.input_Basic_Salary) {
                     this.basic_Salary_Error = true;
                     hasError = true;
                 } else {
                     this.basic_Salary_Error = false;
                 }
 
-                if (!/^[0-9]*$/.test(this.input_Transport_Expens)) {
+                if (!/^[0-9]*$/.test(this.input_Transport_Expens) || 1 > this.input_Transport_Expens) {
                     this.transport_Expens_Error = true;
                     hasError = true;
                 } else {

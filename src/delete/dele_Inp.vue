@@ -122,7 +122,8 @@
                     this.id_Error = false;
                 }
 
-                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.input_Emp_Name)) {
+
+                if (!/^[一-龯ぁ-んァ-ヶー]*$/.test(this.input_Emp_Name) || 1 > this.input_Emp_Name.length || this.input_Emp_Name.length > 256) {
                     this.name_Error = true;
                     hasError = true;
                 } else {
