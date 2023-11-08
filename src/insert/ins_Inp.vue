@@ -30,6 +30,23 @@
                         <select_Dropdown v-model="selected_Gender" label="性別:" id="mySelect" selectClass="select-Dropdown" :options="gender_Option" />
                     </div>
                 </v-row>
+
+                <br><br>
+
+                    <v-row justify="center">
+                        <div>
+                            <select_Dropdown v-model="selected_Child" label="子供の人数:" id="mySelect" selectClass="select-Dropdown" :options="child_Option" />
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
+                        <div>
+                            <select_Dropdown v-model="selected_House" label="住宅手当:" id="mySelect" selectClass="select-Dropdown" :options="house_Option" />
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
+                        <div>
+                            <select_Dropdown v-model="selected_Position" label="役職:" id="mySelect" selectClass="select-Dropdown" :options="position_Option" />
+                        </div>
+                    </v-row>
+
                 <br><br>
 
 
@@ -101,7 +118,13 @@
                 selected_Month: 1, // 選択された月
                 selected_Day: 1, // 選択された日
                 selected_Gender: '男性',
+                selected_Child: 0,
+                selected_House: 'なし',
+                selected_Position: '一般',
                 gender_Option: ['男性', '女性'],
+                child_Option: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                house_Option: ['なし', 'あり'],
+                position_Option: ['社長', '専務', '常務', '部長', '課長', 'リーダー', '一般'],
                 error_Message:'',
             };
         },
@@ -162,7 +185,8 @@
                     this.$router.push({
                         name: 'ins_Confi', params: {
                             emp_Id: this.input_Emp_Id, emp_Name: this.input_Emp_Name,
-                            birth: birth, age: Age, gender: this.selected_Gender,
+                            birth: birth, age: Age, gender: this.selected_Gender, child: this.selected_Child,
+                            house: this.selected_House, position: this.selected_Position,
                             basic_Salary: this.input_Basic_Salary, transport_Expens: this.input_Transport_Expens,
                         }
                     });

@@ -13,6 +13,9 @@
                 <p class="text-center" :style="{'color': 'black'}">生年月日 : {{ birth }}</p>
                 <p class="text-center" :style="{'color': 'black'}">年齢 : {{ age }}</p>
                 <p class="text-center" :style="{'color': 'black'}">性別 : {{ gender }}</p>
+                <p class="text-center" :style="{'color': 'black'}">子供の人数 : {{ child }}</p>
+                <p class="text-center" :style="{'color': 'black'}">住宅手当 : {{ house }}</p>
+                <p class="text-center" :style="{'color': 'black'}">役職 : {{ position }}</p>
                 <p class="text-center" :style="{'color': 'black'}">基本給 : {{ basic_Salary }}円</p>
                 <p class="text-center" :style="{'color': 'black'}">交通費 : {{ transport_Expens }}円</p>
 
@@ -47,6 +50,9 @@
                 birth: '',
                 age: '',
                 gender: '',
+                child: '',
+                house: '',
+                position: '',
                 basic_Salary: '',
                 transport_Expens:'',
             };
@@ -58,6 +64,9 @@
             this.birth = this.$route.params.birth;
             this.age = this.$route.params.age;
             this.gender = this.$route.params.gender;
+            this.child = this.$route.params.child;
+            this.house = this.$route.params.house;
+            this.position = this.$route.params.position;
             this.basic_Salary = this.$route.params.basic_Salary;
             this.transport_Expens = this.$route.params.transport_Expens;
         },
@@ -76,6 +85,9 @@
                             birth: this.birth,
                             age: this.age,
                             gender: this.gender,
+                            child: this.child,
+                            house: this.house,
+                            position: this.position,
                             basic_Salary: this.basic_Salary,
                             transport_Expens: this.transport_Expens,
                         }

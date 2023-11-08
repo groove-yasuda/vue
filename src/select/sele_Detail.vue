@@ -32,6 +32,7 @@
                                                 <td class="text-start" :style="{'color': 'black'}">{{ item['生年月日'] }}</td>
                                                 <td class="text-start" :style="{'color': 'black'}">{{ item['年齢'] }}</td>
                                                 <td class="text-start" :style="{'color': 'black'}">{{ item['性別'] }}</td>
+                                                <td class="text-start" :style="{'color': 'black'}">{{ item['役職'] }}</td>
                                             </tr>
                                         </template>
                                     </v-data-table>
@@ -40,9 +41,6 @@
 
                             <v-row>
                                 <v-col cols="12">
-                                    <hot-table :data="attendance_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
-                                    <hot-table :data="attendance_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
-                                    <br>
                                     <hot-table :data="salary_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
                                     <hot-table :data="salary_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                                     <br>
@@ -134,15 +132,12 @@
                     { text: '生年月日' },
                     { text: '年齢' },
                     { text: '性別' },
-                ],
-                attendance_Data: [
-                    ["就業日数", "出勤日数", "労働時間", "欠勤日数",""],
-                    [],
-                    ["残業時間", "休日出勤日数"],
-                    [],
+                    { text: '役職' },
                 ],
                 salary_Data: [
-                    ["基本給", "通勤手当", "残業代", "固定残業代", "合計"],
+                    ["基本給", "通勤手当", "固定残業代","",""],
+                    [],
+                    ["子ども手当", "住宅手当", "役職手当", "" , "合計"],
                     [],
                 ],
                 deduction_Data: [
@@ -154,9 +149,6 @@
                 total_Data: [
                     ["総支給額", "", "控除総額","", "差引支給額"],
                     [],
-                ],
-                attendance_Karam: [
-                    ["勤怠"],
                 ],
                 salary_Karam: [
                     ["給与"],
@@ -226,14 +218,18 @@
                     }
                 })
                 .then((response) => {
-                    if (response.data && "key0" in response.data && "key1" in response.data) {
+                    if (response.data && "key0" in response.data && "key1" in response.data && "key2" in response.data) {
                         const data = response.data;
 
                         const list_Employee_Information = data["key0"];
-                        const list_Deduction = data["key1"];
+                        const list_Allowance = data["key1"];
+                        const list_Deduction = data["key2"];
 
                         let sousikyu;
                         let Age;
+                        let Child;
+                        let House;
+                        let house_Allowance;
 
 
                         list_Employee_Information.forEach((item) => {
@@ -243,6 +239,12 @@
                             const birth = parts[2].split("=")[1];
                             const age = parts[3].split("=")[1];
                             const gender = parts[4].split("=")[1];
+                            const child = parts[5].split("=")[1];
+                            const house = parts[6].split("=")[1];
+                            const position = parts[7].split("=")[1]; 
+                            
+
+                            console.log(position);
 
                             this.desserts.push({
                                 '社員ID': syainID,
@@ -250,44 +252,52 @@
                                 '生年月日': birth,
                                 '年齢': age,
                                 '性別': gender,
+                                '役職': position,
                             });
 
-                            const basic_salary = parseFloat(parts[5].split("=")[1]);
-                            const Transportation_expenses = parseFloat(parts[6].split("=")[1]);
-                            const overtime_pay = parseFloat(parts[7].split("=")[1]);
-                            const Fixed_overtime_pay = parseFloat(parts[8].split("=")[1]);
+                            const basic_salary = parseFloat(parts[8].split("=")[1]);
+                            const Transportation_expenses = parseFloat(parts[9].split("=")[1]);
+                            const Fixed_overtime_pay = parseFloat(parts[10].split("=")[1]);
+                            const position_allowance = parseFloat(parts[11].split("=")[1]);
 
                             this.salary_Data[1][0] = `¥${basic_salary.toLocaleString()}`;
                             this.salary_Data[1][1] = `¥${Transportation_expenses.toLocaleString()}`;
-                            this.salary_Data[1][2] = `¥${overtime_pay.toLocaleString()}`;
-                            this.salary_Data[1][3] = `¥${Fixed_overtime_pay.toLocaleString()}`;
-                            this.salary_Data[1][4] = `¥${(basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay).toLocaleString()}`;
+                            this.salary_Data[1][2] = `¥${Fixed_overtime_pay.toLocaleString()}`;
+                            this.salary_Data[3][2] = `¥${position_allowance.toLocaleString()}`;
 
-                            sousikyu = basic_salary + Transportation_expenses + overtime_pay + Fixed_overtime_pay;
+                            sousikyu = (basic_salary + Transportation_expenses + Fixed_overtime_pay + position_allowance);
                             Age = age;
+                            Child = child;
+                            House = house;
 
-
-
-                            const employment = parseFloat(parts[9].split("=")[1]);
-                            const attendance_At_Work = parseFloat(parts[10].split("=")[1]);
-                            const work = parts[11].split("=")[1];
-                            const absenteeism = parseFloat(parts[12].split("=")[1]);
-                            const overtime = parts[13].split("=")[1];
-                            const holiday_Work = parts[14].split("=")[1];
-
-
-
+                            console.log(sousikyu);
 
                             this.is_Condition_Met = true;
                             this.isLoading = false;
-
-                            this.attendance_Data[1][0] = employment + ' 日';
-                            this.attendance_Data[1][1] = attendance_At_Work + ' 日';
-                            this.attendance_Data[1][2] = work + ' 時間';
-                            this.attendance_Data[1][3] = holiday_Work + ' 日';
-                            this.attendance_Data[3][0] = overtime + ' 時間';
-                            this.attendance_Data[3][1] = absenteeism + ' 日';
                         });
+
+
+                        list_Allowance.forEach((item) => {
+                            const parts = item.split(", ");
+                            const child = parseFloat(parts[0].split("=")[1]);
+                            const house = parseFloat(parts[1].split("=")[1]);
+                            const child_Allowance = child * Child;
+                            
+                            if (House === "あり") {
+                               house_Allowance = house;
+                            }
+                            else {
+                               house_Allowance = 0;
+                            }
+
+                            this.salary_Data[3][0] = `¥${(child_Allowance * Child).toLocaleString()}`;
+                            this.salary_Data[3][1] = `¥${house_Allowance.toLocaleString()}`;
+                            sousikyu = sousikyu + (child_Allowance * parseFloat(Child)) + parseFloat(house_Allowance);
+                            this.salary_Data[3][4] = `¥${sousikyu.toLocaleString()}`;
+
+                        })
+
+
 
                         list_Deduction.forEach((item) => {
                             const parts = item.split(", ");
@@ -336,6 +346,7 @@
                     } else {
                         this.isLoading = false;
                         this.is_Condition_Met = false;
+
                     }
                 })
 
