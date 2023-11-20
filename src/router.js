@@ -14,6 +14,7 @@ import sele_Inp from './select/sele_Inp.vue'
 import sele_Result from './select/sele_Result.vue'
 import sele_Detail from './select/sele_Detail.vue'
 import test_Test from './login/test_Test.vue'
+import factory_Input from './factory_System/factory_Input.vue'
 
 Vue.use(VueRouter)
 
@@ -87,6 +88,11 @@ const routes = [
         path: '/test_test',
         name: 'test_Test',
         component: test_Test
+    },
+    {
+        path: '/factory_input',
+        name: 'factory_Input',
+        component: factory_Input
     },
 ]
 

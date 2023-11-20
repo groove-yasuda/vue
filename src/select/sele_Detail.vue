@@ -328,8 +328,8 @@
                             const deduction_Amount = social_Insurance + tax_Amount;
                             const deduction_Payment_Amount = sousikyu - deduction_Amount;
 
-                            this.deduction_Data[1][0] = `¥${employment_Insurance.toLocaleString()}`;//雇用保険
-                            this.deduction_Data[1][1] = `¥${health_Insurance.toLocaleString()}`;//健康保険
+                            this.deduction_Data[1][0] = `¥${Math.ceil(employment_Insurance).toLocaleString()}`;//雇用保険
+                            this.deduction_Data[1][1] = `¥${Math.ceil(health_Insurance).toLocaleString()}`;//健康保険
                             this.deduction_Data[1][2] = `¥${Math.ceil(welfare_Pension_Insurance).toLocaleString()}`;//厚生年金
                             this.deduction_Data[1][4] = `¥${Math.ceil(social_Insurance).toLocaleString()}`;//社会保険合計
                             this.deduction_Data[3][0] = `¥${Math.ceil(income_Tax).toLocaleString()}`;//所得税

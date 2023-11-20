@@ -15,6 +15,7 @@
     "handsontable": "13.1.0",
     "he": "1.2.0",
     "vue": "2.7.15",
+    "vue-js-modal": "2.0.1",
     "vue-pivot-table-plus": "0.7.1",
     "vue-router": "2.8.1",
     "vuetify": "2.7.1"

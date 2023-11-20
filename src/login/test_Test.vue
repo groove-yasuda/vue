@@ -1,51 +1,81 @@
 ﻿<template>
-    <v-app>
-        <v-main>
-            <v-container>
-
-                <p>社員情報登録</p>
-                <p>社員情報入力画面</p>
-
-
-                <br>
+    <div id="app">
+        <!--  クリック要素  -->
+        <span v-on:click="open" class="modal_open_btn">ここをクリック!!</span>
+        <!--  モーダルウィンドウ  -->
+        <div v-show="show" class="modal_contents">
+            <!-- モーダルウィンドウの背景 -->
+            <div v-on:click="close" class="modal_contents_bg"></div>
+            <!--   モーダルウィンドウの中身   -->
+            <div class="modal_contents_wrap">
                 <v-row justify="center">
-                    <p>社員情報入力画面</p>
+                    <p>モーダルウィンドウ</p>
                 </v-row>
-                <br><br>
 
-                <v-row justify="center">
-                    <v-col cols="auto">
-                        <v-btn v-on:click="generateRandomInteger">登録</v-btn>
-                    </v-col>
-
-                    <v-col cols="auto">
-                        <v-btn v-on:click="generateRandomInteger">登録</v-btn>
-                    </v-col>
-
-                    <v-col cols="auto">
-                        <v-btn v-on:click="generateRandomInteger">登録</v-btn>
+                <v-row>
+                    <v-col cols="12">
+                        <hot-table :data="salary_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                        <hot-table :data="salary_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                        <br>
+                        <hot-table :data="deduction_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                        <hot-table :data="deduction_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
+                        <br>
+                        <hot-table :data="total_Karam" :settings="set" colWidths="200" rowHeights="45"></hot-table>
+                        <hot-table :data="total_Data" :settings="settings" colWidths="200" rowHeights="45"></hot-table>
                     </v-col>
                 </v-row>
 
-
-            </v-container>
-
-
-
-        </v-main>
-    </v-app>
+                <v-row justify="center">
+                    <!--   モーダルウィンドウを閉じる   -->
+                    <span v-on:click="close" class="modal_close_btn">閉じる</span>
+                </v-row>
+            </div>
+        </div>
+    </div>
 </template>
 
 
 
 <style>
-    .a {
-        width: 80%;
-        color: red;
+    /* モーダルウィンドウを開く要素 */
+    .modal_open_btn {
+        display: inline-block;
+        cursor: pointer;
+        padding-top: 30px;
     }
-
-    .error-message {
-        color: red;
+    /* モーダルウィンドウ要素 */
+    .modal_contents {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        width: 100%;
+    }
+    /* モーダルウィンドウの背景要素 */
+    .modal_contents_bg {
+        background: rgba(0,0,0,.8);
+        width: 100%;
+        height: 100%;
+    }
+    /* モーダルウィンドウの中身*/
+    .modal_contents_wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: #fff;
+        width: 50%;
+        height: 50%;
+        margin: auto;
+        transform: translate(-50%,-50%);
+        padding: 30px;
+    }
+    /* モーダルウィンドウを閉じる要素 */
+    .modal_close_btn {
+        display: inline-block;
+        cursor: pointer;
+        margin-top: 10px;
     }
 </style>
 
@@ -53,19 +83,20 @@
     export default {
         data() {
             return {
-                randomInteger: null,
-            };
+                //デフォルトはモーダルウィンドウを閉じる
+                show: false
+            }
         },
         methods: {
-            generateRandomInteger() {
-                // Math.random()で0以上1未満の浮動小数点数を生成
-                const randomFloat = Math.random();
-
-                // 0, 1, 2のいずれかの整数に変換
-                // Math.floor()を使用して切り捨て
-                this.randomInteger = Math.floor(randomFloat * 3);
+            //モーダルウィンドウを開く要素をクリックしたら
+            open: function () {
+                this.show = true
             },
-        },
+            //モーダルウィンドウを閉じる要素をクリックしたら
+            close: function () {
+                this.show = false
+            },
+        }
     };
 </script>
 
