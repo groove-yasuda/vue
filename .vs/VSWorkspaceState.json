@@ -2,14 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\assets",
     "\\src\\components",
     "\\src\\delete",
+    "\\src\\factory_System",
     "\\src\\insert",
     "\\src\\login",
     "\\src\\plugins",
     "\\src\\select",
     "\\src\\update"
   ],
+  "SelectedNode": "\\src\\components\\select_Dropdown.vue",
   "PreviewInSolutionExplorer": false
 }
