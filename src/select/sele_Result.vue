@@ -17,9 +17,8 @@
                         <v-container>
 
                             <v-data-table :headers="headers" :items="desserts" :items-per-page="items_Per_Page" 
-                                          class="elevation-10" height="600px" :page.sync="page" 
-                                          :footer-props="{ showFirstLastPage: true, firstIcon: 'mdi-arrow-collapse-left',
-                                          lastIcon: 'mdi-arrow-collapse-right', prevIcon: 'mdi-minus', nextIcon: 'mdi-plus'}">
+                                          class="elevation-10" height="600px"
+                                          :footer-props="{ 'disable-items-per-page': true}">
 
                                 <template v-slot:item="{ item }">
                                     <tr>
@@ -80,7 +79,7 @@
         data() {
             return {
                 page: 1,
-                items_Per_Page: 5,
+                items_Per_Page:'-1',
                 search_Prime: '',
                 search_Option: '',
                 id_Order: '',
