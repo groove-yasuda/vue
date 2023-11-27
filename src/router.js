@@ -16,6 +16,7 @@ import sele_Detail from './select/sele_Detail.vue'
 import test_Test from './login/test_Test.vue'
 import factory_Input from './factory_System/factory_Input.vue'
 import factory_Search from './factory_System/factory_Search.vue'
+import factory_Update from './factory_System/factory_Update.vue'
 
 Vue.use(VueRouter)
 
@@ -99,6 +100,11 @@ const routes = [
         path: '/factory_search',
         name: 'factory_Search',
         component: factory_Search
+    },
+    {
+        path: '/factory_update',
+        name: 'factory_Update',
+        component: factory_Update
     },
 ]
 

@@ -38,7 +38,6 @@
                 <div v-for="(textbox, index) in textboxes" :key="index" class="textbox-container">
                     <input-field label="通称" v-model="textboxes[index].value" :hint="Common_Hint" />
                 </div>
-                <p class="text-center" :style="{'color': 'black'}">社員ID : {{ textboxes[0].value }}</p>
                 <br><br>
 
 
@@ -120,8 +119,8 @@
         computed: {
             year_Range() {
                 const current_Year = new Date().getFullYear();
-                const start_Year = current_Year - 100; // 100年分の範囲を生成
-                return Array.from({ length: 101 }, (_, i) => start_Year + i);
+                const start_Year = current_Year - 150; // 100年分の範囲を生成
+                return Array.from({ length: 151 }, (_, i) => start_Year + i);
             },
             day_Range() {
                 return Array.from({ length: 31 }, (_, i) => i + 1); // 日の選択肢を1から31まで生成
@@ -185,19 +184,8 @@
                     let common_Name2;
 
                     common_Name0 = this.textboxes[0].value;
-
-                    if (this.textboxes.length === 2) {
-                        common_Name1 = this.textboxes[1].value;
-                    } else {
-                        common_Name1 = "";
-                    }
-
-                    if (this.textboxes.length === 3) {
-                        common_Name2 = this.textboxes[2].value;
-                    } else {
-                        common_Name2 = "";
-                    }
-
+                    common_Name1 = this.textboxes[1].value;
+                    common_Name2 = this.textboxes[2].value;
                     axios
                         .request({
                             method: 'POST',
@@ -214,16 +202,24 @@
                             if (response.data === true) {
                                 const error_Message = '登録が完了しました。';
                                 this.error_Message = error_Message;
-                                this.textboxes[0].value = '';
+                                this.dataReset()
                             }
                             else if (response.data === false) {
                                 const error_Message = '入力された工場名はすでに登録されています。';
                                 this.error_Message = error_Message;
-                                this.textboxes[0].value = '';
+                                this.dataReset()
                             }
 
                         })
                 }
+            },
+            dataReset() {
+                const name = '';
+                this.textboxes = [{ value: '' }];
+                this.$nextTick(() => {
+                    this.input_Emp_Name = name;
+                    console.log(this.input_Emp_Name);
+                });
             }
         },
         }
